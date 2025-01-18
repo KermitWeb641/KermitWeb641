@@ -1,3 +1,10 @@
+console.log('Constants loaded:', typeof WINDOW_WIDTH !== 'undefined');
+console.log('Colors loaded:', typeof COLORS !== 'undefined');
+console.log('World Generator loaded:', typeof generateDetailedWorld !== 'undefined');
+console.log('Camera loaded:', typeof Camera !== 'undefined');
+console.log('Sprites loaded:', typeof Player !== 'undefined');
+console.log('Renderer loaded:', typeof Renderer !== 'undefined');
+
 const canvas = document.getElementById('gameCanvas');
 canvas.width = WINDOW_WIDTH;
 canvas.height = WINDOW_HEIGHT;
