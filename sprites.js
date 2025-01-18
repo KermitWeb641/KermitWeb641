@@ -1,82 +1,46 @@
-const SPRITE_SIZE = 32;
-
-const PLAYER_SPRITES = {
-    idle: {
-        frames: 4,
-        animationSpeed: 8,
-        spriteSheet: 'player_idle.png'
-    },
-    walk: {
-        frames: 6,
-        animationSpeed: 10,
-        spriteSheet: 'player_walk.png'
-    },
-    attack: {
-        frames: 4,
-        animationSpeed: 12,
-        spriteSheet: 'player_attack.png'
-    }
+const SPRITE_STATES = {
+    IDLE: 0,
+    WALKING: 1,
+    ATTACKING: 2
 };
 
-class Character {
+class Player {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.currentState = 'idle';
-        this.frameIndex = 0;
-        this.frameCounter = 0;
+        this.width = 32;
+        this.height = 32;
+        this.speed = 5;
+        this.state = SPRITE_STATES.IDLE;
+        this.frameCount = 0;
+        this.currentFrame = 0;
         this.direction = 1; // 1 for right, -1 for left
-        this.loadSprites();
-    }
-
-    loadSprites() {
-        this.sprites = {};
-        Object.keys(PLAYER_SPRITES).forEach(state => {
-            const img = new Image();
-            img.src = `sprites/${PLAYER_SPRITES[state].spriteSheet}`;
-            this.sprites[state] = img;
-        });
     }
 
     update() {
-        // Animation update
-        this.frameCounter++;
-        const currentAnim = PLAYER_SPRITES[this.currentState];
-        if (this.frameCounter >= currentAnim.animationSpeed) {
-            this.frameCounter = 0;
-            this.frameIndex = (this.frameIndex + 1) % currentAnim.frames;
+        // Handle movement
+        if (keys['w']) this.y -= this.speed;
+        if (keys['s']) this.y += this.speed;
+        if (keys['a']) {
+            this.x -= this.speed;
+            this.direction = -1;
+        }
+        if (keys['d']) {
+            this.x += this.speed;
+            this.direction = 1;
         }
 
-        // Movement update
-        const keys = {};
-        if (keys['w'] || keys['a'] || keys['s'] || keys['d']) {
-            this.currentState = 'walk';
-        } else {
-            this.currentState = 'idle';
+        // Update animation frames
+        this.frameCount++;
+        if (this.frameCount > 5) {
+            this.currentFrame = (this.currentFrame + 1) % 4;
+            this.frameCount = 0;
         }
     }
 
-    draw(ctx, cameraX, cameraY) {
-        const screenX = this.x - cameraX;
-        const screenY = this.y - cameraY;
-        
-        ctx.save();
-        if (this.direction === -1) {
-            ctx.scale(-1, 1);
-        }
-        
-        ctx.drawImage(
-            this.sprites[this.currentState],
-            this.frameIndex * SPRITE_SIZE,
-            0,
-            SPRITE_SIZE,
-            SPRITE_SIZE,
-            screenX,
-            screenY,
-            SPRITE_SIZE,
-            SPRITE_SIZE
-        );
-        
-        ctx.restore();
+    draw(ctx) {
+        // For now, draw a placeholder rectangle
+        ctx.fillStyle = '#FF0000';
+        ctx.fillRect(this.x - camera.x, this.y - camera.y, this.width, this.height);
     }
 }
