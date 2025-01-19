@@ -1,49 +1,42 @@
-function improvedNoise(x, y) {
-    return Math.sin(x * 0.05) * Math.cos(y * 0.05) * 
-           Math.sin((x + y) * 0.05) +
-           Math.sin(x * 0.1) * Math.cos(y * 0.1) * 0.5;
-}
-
-function generateDetailedWorld() {
-    let worldData = [];
-    for (let y = 0; y < MAP_HEIGHT; y++) {
-        let row = [];
-        for (let x = 0; x < MAP_WIDTH; x++) {
-            let value = improvedNoise(x, y);
-            let elevation = (improvedNoise(x * 2, y * 2) + 1) * 0.5;
-            
-            let biome;
-            if (elevation < 0.2) {
-                biome = 'WATER';
-            } else if (elevation < 0.25) {
-                biome = 'BEACH';
-            } else if (value < -0.5) {
-                biome = 'DESERT';
-            } else if (value < -0.2) {
-                biome = 'WASTELAND';
-            } else if (value < 0) {
-                biome = 'GRASS';
-            } else if (value < 0.2) {
-                biome = 'FOREST';
-            } else if (value < 0.4) {
-                biome = 'URBAN';
-            } else if (value < 0.6) {
-                biome = 'RUINS';
-            } else {
-                biome = 'MOUNTAIN';
-            }
-
-            if (((x % 100 === 0 || y % 100 === 0) && elevation > 0.25) ||
-                ((x + 50) % 100 === 0 && (y + 50) % 100 === 0 && elevation > 0.25)) {
-                biome = 'ROAD';
-            }
-
-            row.push({
-                type: biome,
-                detail: Math.random()
-            });
-        }
-        worldData.push(row);
+const COLORS = {
+    URBAN: {
+        main: '#808080',
+        detail: ['#707070', '#909090', '#606060']
+    },
+    GRASS: {
+        main: '#228B22',
+        detail: ['#1F7A1F', '#2A9D2A', '#197519']
+    },
+    FOREST: {
+        main: '#006400',
+        detail: ['#005000', '#007800', '#004B00']
+    },
+    DESERT: {
+        main: '#F4A460',
+        detail: ['#E8935A', '#FFB573', '#D89254']
+    },
+    WATER: {
+        main: '#4169E1',
+        detail: ['#3158D0', '#517FF2', '#2F4FC7']
+    },
+    MOUNTAIN: {
+        main: '#696969',
+        detail: ['#5A5A5A', '#787878', '#4F4F4F']
+    },
+    WASTELAND: {
+        main: '#8B4513',
+        detail: ['#7A3B10', '#9C4F16', '#6A340F']
+    },
+    RUINS: {
+        main: '#4A4A4A',
+        detail: ['#404040', '#545454', '#353535']
+    },
+    ROAD: {
+        main: '#2F2F2F',
+        detail: ['#252525', '#393939', '#1F1F1F']
+    },
+    BEACH: {
+        main: '#F0E68C',
+        detail: ['#E6DC82', '#FAF096', '#D6CC7C']
     }
-    return worldData;
-}
+};
