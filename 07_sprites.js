@@ -79,7 +79,6 @@ class Zombie {
             Math.pow(this.x - player.x, 2) + 
             Math.pow(this.y - player.y, 2)
         );
-
         if (distance < this.detectionRange) {
             this.state = 'chasing';
             const angle = Math.atan2(player.y - this.y, player.x - this.x);
