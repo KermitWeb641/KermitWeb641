@@ -4,6 +4,12 @@ canvas {
     margin: 0 auto;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: #333;
     display: flex;
@@ -21,4 +27,12 @@ body {
     background-color: #000;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+}
+
+.game-ui {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
