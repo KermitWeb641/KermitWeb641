@@ -1,42 +1,55 @@
-const COLORS = {
-    URBAN: {
-        main: '#808080',
-        detail: ['#707070', '#909090', '#606060']
-    },
-    GRASS: {
-        main: '#228B22',
-        detail: ['#1F7A1F', '#2A9D2A', '#197519']
-    },
-    FOREST: {
-        main: '#006400',
-        detail: ['#005000', '#007800', '#004B00']
-    },
-    DESERT: {
-        main: '#F4A460',
-        detail: ['#E8935A', '#FFB573', '#D89254']
-    },
-    WATER: {
-        main: '#4169E1',
-        detail: ['#3158D0', '#517FF2', '#2F4FC7']
-    },
-    MOUNTAIN: {
-        main: '#696969',
-        detail: ['#5A5A5A', '#787878', '#4F4F4F']
-    },
-    WASTELAND: {
-        main: '#8B4513',
-        detail: ['#7A3B10', '#9C4F16', '#6A340F']
-    },
-    RUINS: {
-        main: '#4A4A4A',
-        detail: ['#404040', '#545454', '#353535']
-    },
-    ROAD: {
-        main: '#2F2F2F',
-        detail: ['#252525', '#393939', '#1F1F1F']
-    },
-    BEACH: {
-        main: '#F0E68C',
-        detail: ['#E6DC82', '#FAF096', '#D6CC7C']
+function generateDetailedWorld() {
+    const world = new Array(MAP_HEIGHT);
+    
+    // Initialize 2D array
+    for (let y = 0; y < MAP_HEIGHT; y++) {
+        world[y] = new Array(MAP_WIDTH);
     }
-};
+    
+    // Generate base terrain using noise
+    for (let y = 0; y < MAP_HEIGHT; y++) {
+        for (let x = 0; x < MAP_WIDTH; x++) {
+            const noise = Math.random();
+            let type;
+            
+            if (noise < 0.3) {
+                type = 'GRASS';
+            } else if (noise < 0.5) {
+                type = 'FOREST';
+            } else if (noise < 0.6) {
+                type = 'URBAN';
+            } else if (noise < 0.7) {
+                type = 'DESERT';
+            } else if (noise < 0.8) {
+                type = 'MOUNTAIN';
+            } else if (noise < 0.85) {
+                type = 'WATER';
+            } else if (noise < 0.9) {
+                type = 'WASTELAND';
+            } else if (noise < 0.95) {
+                type = 'RUINS';
+            } else {
+                type = 'BEACH';
+            }
+            
+            world[y][x] = {
+                type: type,
+                detail: Math.random()
+            };
+        }
+    }
+    
+    // Add roads connecting urban areas
+    for (let y = 0; y < MAP_HEIGHT; y += 50) {
+        for (let x = 0; x < MAP_WIDTH; x++) {
+            if (Math.random() < 0.7) {
+                world[y][x] = {
+                    type: 'ROAD',
+                    detail: Math.random()
+                };
+            }
+        }
+    }
+    
+    return world;
+}
