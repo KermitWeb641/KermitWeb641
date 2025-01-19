@@ -1,3 +1,9 @@
+// Add styles dynamically
+const styleLink = document.createElement('link');
+styleLink.rel = 'stylesheet';
+styleLink.href = 'styles.css';
+document.head.appendChild(styleLink);
+
 // Resource loading verification
 console.log('Constants loaded:', typeof WINDOW_WIDTH !== 'undefined');
 console.log('Colors loaded:', typeof COLORS !== 'undefined');
