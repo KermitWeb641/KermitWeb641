@@ -1,3 +1,4 @@
+// Resource loading verification
 console.log('Constants loaded:', typeof WINDOW_WIDTH !== 'undefined');
 console.log('Colors loaded:', typeof COLORS !== 'undefined');
 console.log('World Generator loaded:', typeof generateDetailedWorld !== 'undefined');
@@ -5,10 +6,12 @@ console.log('Camera loaded:', typeof Camera !== 'undefined');
 console.log('Sprites loaded:', typeof Player !== 'undefined');
 console.log('Renderer loaded:', typeof Renderer !== 'undefined');
 
+// Canvas setup
 const canvas = document.getElementById('gameCanvas');
 canvas.width = WINDOW_WIDTH;
 canvas.height = WINDOW_HEIGHT;
 
+// Game initialization
 const worldData = generateDetailedWorld();
 const camera = new Camera();
 const renderer = new Renderer(canvas, worldData, camera);
@@ -40,7 +43,7 @@ setInterval(() => {
     }
 }, SPAWN_INTERVAL);
 
-// Add keyboard event listeners
+// Event listeners
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         gameRunning = !gameRunning; // Toggle pause
