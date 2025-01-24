@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zombie Survival Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="game-container">
+        <div id="camera-viewport">
+            <canvas id="gameMap"></canvas>
+            <div id="debug-info"></div>
+        </div>
+        <img id="custom-cursor" 
+             src="https://static.thenounproject.com/png/1881152-200.png" 
+             alt="Custom Cursor" 
+             style="display:block; position: fixed; pointer-events: none;">
+        
+        <div id="game-over-screen" class="hidden">
+            <div class="game-over-content">
+                <h1>You Died</h1>
+                <button id="restart-button">New Game</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="map.js"></script>
+</body>
+</html>
